@@ -1,0 +1,341 @@
+/*
+
+
+    Para dividir o código HTML em etapas de produção lógica, podemos seguir uma abordagem modular, separando cada bloco de código em partes significativas que correspondem a funcionalidades específicas do jogo. Aqui está uma divisão em etapas:
+
+### Etapa 1: Estrutura HTML Básica
+
+- **Definição do tipo de documento e início do HTML:**
+  ```html
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Text RPG</title>
+  ```
+
+### Etapa 2: Estilos CSS
+
+- **Estilo para o corpo e elementos do jogo:**
+  ```html
+      <style>
+          body {
+              font-family: Arial, sans-serif;
+              background-color: #000;
+              color: #fff;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              margin: 0;
+          }
+          #menu, #game {
+              width: 600px;
+              padding: 20px;
+              border: 1px solid #fff;
+              background-color: #111;
+          }
+          #output {
+              white-space: pre-wrap;
+              height: 300px;
+              overflow-y: scroll;
+              margin-bottom: 10px;
+              background-color: #000;
+              color: #fff;
+              padding: 10px;
+              border: 1px solid #fff;
+          }
+          #controls {
+              display: flex;
+              gap: 10px;
+          }
+          #menu {
+              text-align: center;
+          }
+          button {
+              background-color: #444;
+              color: #fff;
+              border: 1px solid #fff;
+              padding: 10px;
+              cursor: pointer;
+          }
+          button:hover {
+              background-color: #666;
+          }
+      </style>
+  </head>
+  <body>
+  ```
+
+### Etapa 3: Estrutura HTML do Corpo
+
+- **Menu inicial e elementos do jogo:**
+  ```html
+      <div id="menu">
+          <h1>RPG ADVENTURE</h1>
+          <button onclick="startGame()">Iniciar Aventura</button>
+      </div>
+      <div id="game" style="display: none;">
+          <div id="output"></div>
+          <div id="controls">
+              <input type="text" id="input" placeholder="Digite seu comando">
+              <button onclick="processCommand()">Enviar</button>
+              <button id="attackButton" onclick="attack()" disabled>Atacar</button>
+          </div>
+      </div>
+  ```
+
+### Etapa 4: Definição de Variáveis e Objetos do Jogo
+
+- **Objetos e variáveis do jogador, monstros e áreas:**
+  ```html
+      <script>
+          let player = {
+              name: "Jogador",
+              hp: 100,
+              maxHp: 100,
+              attack: 10,
+              defense: 5,
+              inventory: ["poção de cura"]
+          };
+
+          let monster = null;
+
+          const areas = {
+              "floresta": [
+                  { name: "Goblin", hp: 30, attack: 5, defense: 2 },
+                  { name: "Lobo", hp: 40, attack: 7, defense: 3 }
+              ],
+              "caverna": [
+                  { name: "Orc", hp: 50, attack: 10, defense: 5 },
+                  { name: "Troll", hp: 60, attack: 12, defense: 6 }
+              ],
+              "vilarejo": [
+                  { name: "Ladrão", hp: 35, attack: 6, defense: 3 },
+                  { name: "Mercenário", hp: 45, attack: 8, defense: 4 }
+              ]
+          };
+
+          const items = ["espada enferrujada", "elmo de couro", "anel mágico"];
+
+          let currentArea = "floresta";
+
+          let output = document.getElementById("output");
+          let input = document.getElementById("input");
+          let attackButton = document.getElementById("attackButton");
+  ```
+
+### Etapa 5: Funções de Utilidade
+
+- **Função de registro de mensagens e início do jogo:**
+  ```html
+          function log(message) {
+              output.textContent += message + "\n";
+              output.scrollTop = output.scrollHeight;
+          }
+
+          function startGame() {
+              document.getElementById("menu").style.display = "none";
+              document.getElementById("game").style.display = "block";
+              log("Bem-vindo ao RPG de Texto!");
+              log("Digite 'explorar [área]' para procurar aventuras, 'status' para ver seu status, 'curar' para usar uma poção de cura, 'fugir' para fugir de um combate, 'inventário' para ver seu inventário, ou 'conversar npc' para conversar com um NPC.");
+              log("Áreas disponíveis: 'floresta', 'caverna', 'vilarejo'.");
+          }
+  ```
+
+### Etapa 6: Processamento de Comandos
+
+- **Função para processar os comandos do jogador:**
+  ```html
+          function processCommand() {
+              let command = input.value.toLowerCase();
+              input.value = "";
+              if (command.startsWith("explorar")) {
+                  let area = command.split(" ")[1];
+                  if (areas[area]) {
+                      currentArea = area;
+                      explore();
+                  } else {
+                      log("Área desconhecida. Tente 'explorar floresta', 'explorar caverna' ou 'explorar vilarejo'.");
+                  }
+              } else if (command === "status") {
+                  showStatus();
+              } else if (command === "curar") {
+                  heal();
+              } else if (command === "fugir") {
+                  flee();
+              } else if (command === "inventário") {
+                  showInventory();
+              } else if (command === "conversar npc") {
+                  talkToNPC();
+              } else {
+                  log("Comando desconhecido. Tente 'explorar [área]', 'status', 'curar', 'fugir', 'inventário' ou 'conversar npc'.");
+              }
+          }
+  ```
+
+### Etapa 7: Funções de Ação no Jogo
+
+- **Funções de exploração, status, inventário, cura, fuga e ataque:**
+  ```html
+          function explore() {
+              log("Você está explorando a " + currentArea + "...");
+              let encounter = Math.random();
+              if (encounter < 0.5) {
+                  let monstersInArea = areas[currentArea];
+                  monster = monstersInArea[Math.floor(Math.random() * monstersInArea.length)];
+                  log("Você encontrou um " + monster.name + "!");
+                  attackButton.disabled = false;
+              } else {
+                  log("Você não encontrou nada.");
+              }
+          }
+
+          function showStatus() {
+              log("Status do jogador:");
+              log("HP: " + player.hp + "/" + player.maxHp);
+              log("Ataque: " + player.attack);
+              log("Defesa: " + player.defense);
+              log("Inventário: " + player.inventory.join(", "));
+          }
+
+          function showInventory() {
+              log("Inventário:");
+              if (player.inventory.length === 0) {
+                  log("Vazio");
+              } else {
+                  log(player.inventory.join(", "));
+              }
+          }
+
+          function heal() {
+              if (player.inventory.includes("poção de cura")) {
+                  player.hp = Math.min(player.hp + 50, player.maxHp);
+                  player.inventory.splice(player.inventory.indexOf("poção de cura"), 1);
+                  log("Você usou uma poção de cura e recuperou 50 HP.");
+                  showStatus();
+              } else {
+                  log("Você não tem poções de cura.");
+              }
+          }
+
+          function flee() {
+              if (monster) {
+                  log("Você fugiu do " + monster.name + ".");
+                  monster = null;
+                  attackButton.disabled = true;
+              } else {
+                  log("Você não está em combate.");
+              }
+          }
+
+          function attack() {
+              if (!monster) {
+                  log("Você não está em combate.");
+                  return;
+              }
+
+              if (Math.random() < 0.2) {
+                  log("Você errou o ataque!");
+              } else {
+                  let playerDamage = Math.max(player.attack - monster.defense, 0);
+                  monster.hp -= playerDamage;
+                  log("Você causou " + playerDamage + " de dano ao " + monster.name + ".");
+              }
+
+              if (monster.hp <= 0) {
+                  log("Você derrotou o " + monster.name + "!");
+                  dropItem();
+                  monster = null;
+                  attackButton.disabled = true;
+                  return;
+              }
+
+              if (Math.random() < 0.2) {
+                  log("O " + monster.name + " errou o ataque!");
+              } else {
+                  let monsterDamage = Math.max(monster.attack - player.defense, 0);
+                  player.hp -= monsterDamage;
+                  log("O " + monster.name + " causou " + monsterDamage + " de dano a você.");
+              }
+
+              if (player.hp <= 0) {
+                  log("Você foi derrotado...");
+                  attackButton.disabled = true;
+              }
+          }
+  ```
+
+### Etapa 8: Funções Adicionais
+
+- **Função para dropar itens e interação com NPCs:**
+  ```html
+          function dropItem() {
+              if (Math.random() < 0.5) {
+                  let item = items[Math.floor(Math.random() * items.length)];
+                  player.inventory.push(item);
+                  log("O " + monster.name + " dropou um " + item + "!");
+                  showInventory();
+              } else {
+                  log("O " + monster.name + " não dropou nenhum item.");
+              }
+          }
+
+          function talkToNPC() {
+              log("Você encontrou um NPC. Escolha uma resposta:");
+              log("1. Olá, quem é você?");
+              log("2. O que você faz aqui?");
+              log("3. Adeus.");
+
+              let npcDialog = true;
+
+              function handleNPCResponse(choice) {
+                  switch (choice) {
+                      case "1":
+                          log("NPC: Eu sou um viajante, assim como você.");
+                          break;
+                      case "2":
+                          log("NPC: Estou explorando estas terras em busca de aventuras.");
+                          break;
+                      case "3":
+                          log("NPC: Adeus, viajante. Que suas jornadas sejam seguras.");
+                          npcDialog = false;
+                          break;
+                      default:
+                          log("Escolha inválida. Tente novamente.");
+                          break;
+                  }
+                  if (npcDialog) {
+                      setTimeout(() => log("Escolha uma resposta (1, 2 ou 3):"), 500);
+                  }
+              }
+
+              document.addEventListener("keydown", function npcListener(event) {
+                  if (npcDialog && ["1", "2", "3"].includes(event.key)) {
+                      handleNPCResponse(event.key);
+                  }
+                  if (!npcDialog) {
+                      document.removeEventListener("keydown", npcListener);
+                  }
+              });
+          }
+      </script>
+  </body>
+  </html>
+  ```
+
+### Resumo
+1. **Estrutura HTML Básica:** Define a estrutura inicial do documento HTML.
+2. **Estilos CSS:** Aplica estilos ao corpo, menu, área de jogo e botões.
+3. **Estrutura HTML do Corpo:** Cria o menu inicial e os elementos principais do jogo.
+4. **Definição de Variáveis e Objetos do Jogo:** Define os objetos do jogador, monstros, áreas e itens.
+5. **Funções de Utilidade:** Funções para registrar mensagens e iniciar o jogo.
+6. **Processamento de Comandos:** Função para processar os comandos do jogador.
+7. **Funções de Ação no Jogo:** Funções para exploração, status, inventário, cura, fuga e ataque.
+8. **Funções Adicionais:** Funções para dropar itens e interação com NPCs.
+
+Essa estrutura modular facilita a compreensão e a manutenção do código.
+
+
+*/

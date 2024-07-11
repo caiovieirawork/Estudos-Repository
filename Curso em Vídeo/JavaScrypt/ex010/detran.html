@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DETRAN</title>
+</head>
+<body>
+    <h1>Qual a tua velocidade patrão?</h1>
+    <input type="number" name="vel" id="ivel">
+    <input type="button" value="Enviar" id="ienviar">
+    <h2>Resultado aqui</h2>
+
+    <script>
+
+        var enviar = window.document.querySelector("input#ienviar")
+        enviar.addEventListener("click", enviando)
+
+        function enviando() {
+
+            var veloc = window.document.querySelector("input#ivel")
+            var cveloc = Number(veloc.value)
+            var res = window.document.querySelector('h2')
+
+            if (cveloc > 60){
+                res.innerHTML = ('Meu querido, por algum acaso você tem PROBLEMA??? <strong>MULTADOOO PARCEIRO</strong>')
+            } else {
+                res.innerHTML = ('Tá tudo suavee meu pacêro, boa viagem pra tu ai meu quiridoo, manda um beijo pra titiaaa')
+            }
+        }
+        
+    </script>
+</body>
+</html>

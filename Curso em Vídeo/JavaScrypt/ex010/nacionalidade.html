@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DETRAN</title>
+</head>
+<body>
+    <h1>Qual país tu nasceu meu rei?</h1>
+    <input type="text" name="pais" id="ipais">
+    <input type="button" value="enviar" id="ienviar">
+    <h2>Resultado aqui</h2>
+
+    <script>
+        var enviar = window.document.querySelector('input#ienviar')
+        enviar.addEventListener("click", enviando)
+
+        function enviando(){
+            var nac = window.document.querySelector('input#ipais')
+            var nac =  nac.value.toUpperCase()
+
+            var result = window.document.querySelector('h2')
+            if (nac == 'BRASIL'){
+                result.innerText = (`CARACA MENÓ, TU MORA NO ${nac}, ENT TU É BRASILEIRO MEU CHAPAAAA, TÁ  APROVADOOOO :)`)
+            }else{
+                result.innerText = (`Meu irmão, tu é do(a) ${nac}, que NOJOOOOOOOOO, TÁ REPROVADOO MEU NOBRE :w`)
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formatação de Strings</title>
+    <style>
+        body{
+            background-color: rgb(119, 55, 119);
+            color: white;
+            font: normal 20pt Arial;
+        }
+    </style>
+</head>
+<body>
+    <h1>Olá, Mundo!</h1>
+    <p>Acabou a maldição do primeiro código</p>
+    <script>
+        var n1 = "Caio Vieira"
+        var i1 = "19 anos"
+        var not1 = 8.5;
+        var lin1 = 'JavaScript'
+        //Concatenação:
+        window.alert('O aluno ' + n1 + " com a idade de " +i1 + " tirou a nota " + not1 + " e está aprendendo " + lin1);
+        //String template
+        window.alert(`O aluno ${n1} com a idade de ${i1} tirou a nota: ${not1} e está aprendendo ${lin1}`); //usando crase
+
+        lin1.length; //quantos caracteres tem essa string
+        lin1.toUpperCase(); //passar para maiúscula
+        lin1.toLowerCase() //passar para minúscula
+    </script>
+</body>
+</html>

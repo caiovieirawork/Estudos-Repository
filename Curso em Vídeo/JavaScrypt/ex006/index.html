@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formatação de Numbers</title>
+    <style>
+        body{
+            background-color: rgb(119, 55, 119);
+            color: white;
+            font: normal 30pt Arial;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        var n1 = 2005.8
+
+        window.alert(n1.toFixed(2)); //Número fixo de casas decimais
+        //.replace('.', ',') trocar o ponto do decimal para uma vírgula
+        window.alert(n1.toFixed(2).replace('.',','));
+
+        //localizar strings por parte do mundo, valor monetário e bla bla bla
+
+        window.alert(n1.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'} ));
+        window.alert(n1.toLocaleString('pt-BR', {style: 'currency', currency: 'USD'} ));
+        window.alert(n1.toLocaleString('pt-BR', {style: 'currency', currency: 'EUR'} ));
+    </script>
+</body>
+</html>

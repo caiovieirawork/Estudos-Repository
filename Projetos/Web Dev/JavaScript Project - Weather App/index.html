@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <title>JavaScript - Weather App</title>
+</head>
+<body>
+    <div class="container">
+        <div class="search__box">
+            <i class="fa-solid fa-location-dot"></i>
+            <input type="text" placeholder="Coloque a sua localização">
+            <button class="fa-solid fa-magnifying-glass"></button>
+        </div> <!--search__box-->
+
+        <div class="not__found">
+            <img src="assets/404.png">
+            <p>Desculpa, parece que a sua localização não está correta...</p>
+        </div> <!--not__found-->
+
+        <div class="weather__box">
+            <img src="">
+            <p class="temperature"></p>
+            <p class="description"></p>
+        </div> <!--weather__box-->
+
+        <div class="weather__details">
+
+            <div class="humidity">
+
+                <i class="fa-solid fa-water "></i>
+
+                <div class="text">
+                    <span></span>
+                        <p>Umidade</p>
+                </div><!--.text-->     
+
+            </div> <!--humidity-->
+
+            <div class="wind">
+
+                <i class="fa-solid fa-wind "></i>
+
+                <div class="text">
+                    <span></span>
+                        <p>Velocidade <br> do Vento</p>
+                </div><!--.text-->     
+
+            </div> <!--wind-->
+
+        </div> <!--weather__details-->
+
+        
+
+    </div> <!--.container-->
+
+    <script src="https://kit.fontawesome.com/7c8801c017.js" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</body>
+</html>
